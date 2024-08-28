@@ -21,11 +21,12 @@ const page = async ({ params }: PageProps) => {
     throw new Error("Invalid URL parameter");
   }
 
+  const reconstructedUrl = reconstructURL({ url: params.url as string[] });
+
   const isAlreadyIndexed = await redis.sismember(
     "indexed-urls",
-    reconstructURL
+    reconstructedUrl
   );
-  const reconstructedUrl = reconstructURL({ url: params.url as string[] });
 
   if (!isAlreadyIndexed) {
     await ragChat.context.add({
