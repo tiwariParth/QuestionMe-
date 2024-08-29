@@ -1,15 +1,22 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { Message, useChat } from "ai/react";
 import React from "react";
 import Messages from "./Messages";
 import { ChatInput } from "./ChatInput";
 
-const ChatWrapper = ({ sessionId }: { sessionId: string }) => {
+const ChatWrapper = ({
+  sessionId,
+  initialMessages,
+}: {
+  sessionId: string;
+  initialMessages: Message[];
+}) => {
   const { messages, handleSubmit, handleInputChange, input, setInput } =
     useChat({
       api: "/api/chat-stream",
       body: { sessionId },
+      initialMessages,
     });
   return (
     <div className="relaltive min-h-full w-full bg-zinc-900 flex divide-y divide-zinc-700 flex-col justify-between gap-2">
