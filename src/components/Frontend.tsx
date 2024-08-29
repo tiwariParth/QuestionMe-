@@ -67,7 +67,7 @@ const Frontend = () => {
 
       {/* Pop-up message */}
       <div
-        className={`fixed bottom-4 right-4 bg-green-500  text-white px-4 py-2 rounded shadow-4xl transition-all transform ${
+        className={`fixed bottom-4 right-4 bg-zinc-800  text-white px-4 py-2 rounded shadow-gray-300 transition-all transform ${
           showMessage ? "translate-x-0" : "translate-x-full"
         } duration-500 ease-out ${
           showMessage ? "opacity-100" : "opacity-0"
