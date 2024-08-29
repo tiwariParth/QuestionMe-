@@ -3,28 +3,25 @@
 import { useChat } from "ai/react";
 import React from "react";
 import Messages from "./Messages";
+import { ChatInput } from "./ChatInput";
 
 const ChatWrapper = ({ sessionId }: { sessionId: string }) => {
-  const { messages, handleSubmit, handleInputChange, input } = useChat({
-    api: "/api/chat-stream",
-    body: { sessionId },
-  });
+  const { messages, handleSubmit, handleInputChange, input, setInput } =
+    useChat({
+      api: "/api/chat-stream",
+      body: { sessionId },
+    });
   return (
     <div className="relaltive min-h-full w-full bg-zinc-900 flex divide-y divide-zinc-700 flex-col justify-between gap-2">
       <div className="flex-1 text-black bg-zinc-800 justify-between flex flex-col">
         <Messages messages={messages} />
       </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={handleInputChange}
-          type="text"
-          value={input}
-          className="text-black"
-        />
-        <button type="submit" className="text-white">
-          Send
-        </button>
-      </form>
+      <ChatInput
+        input={input}
+        handleInputChange={handleInputChange}
+        handleSumit={handleSubmit}
+        setInput={setInput}
+      />
     </div>
   );
 };

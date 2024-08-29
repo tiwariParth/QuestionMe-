@@ -1,6 +1,7 @@
 import ChatWrapper from "@/components/ChatWrapper";
 import { ragChat } from "@/lib/rag-chat";
 import { redis } from "@/lib/redis";
+import { cookies } from "next/headers";
 import React from "react";
 
 interface PageProps {
@@ -18,12 +19,15 @@ function reconstructURL({ url }: { url: string[] }) {
 }
 
 const page = async ({ params }: PageProps) => {
+  const sessionCookie = cookies().get("sessionId")?.value;
   if (!params.url || typeof params.url === "string") {
     throw new Error("Invalid URL parameter");
   }
-
   const reconstructedUrl = reconstructURL({ url: params.url as string[] });
-  const sessionId = "test-session-id";
+  const sessionId = (reconstructedUrl + "--" + sessionCookie).replace(
+    /\//g,
+    ""
+  );
   const isAlreadyIndexed = await redis.sismember(
     "indexed-urls",
     reconstructedUrl
